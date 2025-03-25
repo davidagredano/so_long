@@ -1,40 +1,42 @@
-CC = cc
-CFLAGS = -MMD -Wall -Wextra -Werror
-COMPILE.c = $(CC) $(CFLAGS) -c
+CC := cc
+CFLAGS := -MMD -Wall -Wextra -Werror
+COMPILE.c := $(CC) $(CFLAGS) -c
 OUTPUT_OPTION = -o $@
 
-LIBFT = libft.a
-LIBFT_DIR = lib/libft
+LIBFT_DIR := lib/libft
+LIBFT := $(LIBFT_DIR)/libft.a
 
-LDFLAGS = -L $(LIBFT_DIR)
-LINK.o = $(CC) $(LDFLAGS)
-LDLIBS = -lft
+LIBMLX_DIR := lib/MLX42
+LIBMLX := $(LIBMLX_DIR)/build/libmlx42.a
 
-RM = rm -f
-RMDIR = rm -rf
+LDFLAGS := -L$(LIBFT_DIR) -L$(LIBMLX_DIR)/build
+LINK.o := $(CC) $(LDFLAGS)
+LDLIBS := -lft -lmlx42 -ldl -lglfw -pthread -lm
 
-NAME = so_long
-SRCS_DIR = srcs
-SRCS = main.c
-BUILD_DIR = build
-OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
-DEPS = $(SRCS:%.c=$(BUILD_DIR)/%.d)
+RM := rm -f
+RMDIR := rm -rf
 
-NAME_BONUS = so_long_bonus
-SRCS_DIR_BONUS = srcs_bonus
-SRCS_BONUS = main_bonus.c
-BUILD_DIR_BONUS = build_bonus
-OBJS_BONUS = $(SRCS_BONUS:%.c=$(BUILD_DIR_BONUS)/%.o)
-DEPS_BONUS = $(SRCS_BONUS:%.c=$(BUILD_DIR_BONUS)/%.d)
+NAME := so_long
+SRCS_DIR := srcs
+SRCS := main.c
+BUILD_DIR := build
+OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
+DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
+
+NAME_BONUS := so_long_bonus
+SRCS_DIR_BONUS := srcs_bonus
+SRCS_BONUS := main_bonus.c
+BUILD_DIR_BONUS := build_bonus
+OBJS_BONUS := $(SRCS_BONUS:%.c=$(BUILD_DIR_BONUS)/%.o)
+DEPS_BONUS := $(SRCS_BONUS:%.c=$(BUILD_DIR_BONUS)/%.d)
 
 
 .PHONY: all bonus clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(MAKE) -C $(LIBFT_DIR)
-	$(LINK.o) $^ $(LDLIBS) -o $@
+$(NAME): $(LIBFT) $(LIBMLX) $(OBJS)
+	$(LINK.o) $(OBJS) $(LDLIBS) -o $@
 
 $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c $(BUILD_DIR)/%.d Makefile | $(BUILD_DIR)
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
@@ -45,9 +47,8 @@ $(BUILD_DIR):
 
 bonus: $(NAME_BONUS)
 
-$(NAME_BONUS): $(OBJS_BONUS)
-	$(MAKE) -C $(LIBFT_DIR)
-	$(LINK.o) $^ $(LDLIBS) -o $@
+$(NAME_BONUS): $(LIBFT) $(LIBMLX) $(OBJS_BONUS)
+	$(LINK.o) $(OBJS_BONUS) $(LDLIBS) -o $@
 
 $(BUILD_DIR_BONUS)/%.o: $(SRCS_DIR_BONUS)/%.c $(BUILD_DIR_BONUS)/%.d \
 		Makefile | $(BUILD_DIR_BONUS)
@@ -62,11 +63,20 @@ $(BUILD_DIR_BONUS):
 -include $(DEPS) $(DEPS_BONUS)
 
 
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
+
+$(LIBMLX):
+	cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build
+	make -C $(LIBMLX_DIR)/build -j4
+
+
 clean:
 	$(RMDIR) $(BUILD_DIR) $(BUILD_DIR_BONUS)
 	$(MAKE) clean -C $(LIBFT_DIR)
+	$(RMDIR) $(LIBMLX_DIR)/build
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS) $(LIBFT_DIR)/$(LIBFT)
+	$(RM) $(NAME) $(NAME_BONUS) $(LIBFT) $(LIBMLX)
 
 re:	fclean all
