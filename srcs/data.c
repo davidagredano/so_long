@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 10:43:34 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/26 18:33:54 by dagredan         ###   ########.fr       */
+/*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
+/*   Updated: 2025/03/26 17:48:10 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib/libft/libft.h"
+#include "../lib/MLX42/include/MLX42/MLX42.h"
 #include "../includes/so_long.h"
 
-t_coord	*player_create(int x, int y)
+t_data	*data_create(void)
 {
-	t_coord	*player;
+	t_data	*data;
 
-	player = (t_coord *)ft_calloc(1, sizeof(t_coord));
-	if (!player)
+	data = (t_data *)ft_calloc(1, sizeof(t_data));
+	if (!data)
 		return (NULL);
-	player->x = x;
-	player->y = y;
-	return (player);
+	data->map = map_create(); // missing error check
+	data->mlx = mlx_init(300, 300, "so_long", true); // missing error check
+	return (data);
 }
 
-void	player_free(t_coord *player)
+void	data_free(t_data *data)
 {
-	free(player);
+	if (data->map)
+		map_free(data->map);
+	if (data->mlx)
+		mlx_terminate(data->mlx);
+	free(data);
 }
