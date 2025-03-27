@@ -6,57 +6,93 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/26 18:13:09 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:33:40 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include "../lib/MLX42/include/MLX42/MLX42.h"
+# include "../lib/MLX42/include/MLX42/MLX42.h"
 
-typedef struct s_coord
+# include <stdlib.h> // EXIT_FAILURE
+
+/* Graphics */
+typedef struct s_images
+{
+	mlx_image_t	*floor;
+	mlx_image_t	*wall;
+	mlx_image_t	*collectible;
+	mlx_image_t	*exit;
+	mlx_image_t	*player;
+}		t_images;
+
+typedef struct s_textures
+{
+	mlx_texture_t	*floor;
+	mlx_texture_t	*wall;
+	mlx_texture_t	*collectible;
+	mlx_texture_t	*exit;
+	mlx_texture_t	*player;
+}		t_textures;
+
+typedef struct s_graphics
+{
+	t_textures	textures;
+	t_images	images;
+}		t_graphics;
+
+/* Game */
+typedef struct s_player
 {
 	int	x;
 	int	y;
-}		t_coord;
+}		t_player;
 
-typedef struct s_map
+typedef struct s_exit
+{
+	int	x;
+	int	y;
+	int	enabled;
+}		t_exit;
+
+typedef struct s_tilemap
 {
 	int		width;
 	int		height;
-	char	**data;
-	t_coord	*exit;
-	t_coord	*player;
-	int		collectibles;
-	int		exit_enabled;
-	int		movements;
-}		t_map;
+	char	**map;
+}		t_tilemap;
 
-typedef struct s_data
+typedef struct s_game
 {
-	mlx_t	*mlx;
-	t_map	*map;
-}		t_data;
+	t_tilemap	tilemap;
+	int			collectibles;
+	t_exit		exit;
+	t_player	player;
+	int			movements;
+}		t_game;
 
-/* Data */
-t_data	*data_create(void);
-void	data_free(t_data *data);
+/* Game */
+t_game	*game_create(char *filename);
+void	game_free(t_game *game);
 
-/* Map */
-t_map	*map_create(void);
-void	map_free(t_map *map);
+/* Tilemap */
+int		tilemap_init(t_game *game, char *filename);
+void	map_free(char **map, int height);
+
+/* Collectibles */
+void	collectibles_init(t_game *game);
 
 /* Exit */
-t_coord	*exit_create(int x, int y);
-void	exit_free(t_coord *exit);
+void	exit_init(t_game *game);
 
 /* Player */
-t_coord	*player_create(int x, int y);
-void	player_update(char key, t_map *map, mlx_t *mlx);
-void	player_free(t_coord *player);
+void	player_init(t_game *game);
 
-/* tmp */
-void	map_log(void *map);
+/* Movements */
+void	movements_init(t_game *game);
+
+/* Debug */
+void	log_game_state(t_game *game);
 
 #endif

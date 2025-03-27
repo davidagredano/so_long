@@ -6,26 +6,34 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:43:34 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/26 11:39:15 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:02:38 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/libft/libft.h"
 #include "../includes/so_long.h"
 
-t_coord	*exit_create(int x, int y)
+void	exit_init(t_game *game)
 {
-	t_coord	*exit;
+	char	**map;
+	int		x;
+	int		y;
 
-	exit = (t_coord *)ft_calloc(1, sizeof(t_coord));
-	if (!exit)
-		return (NULL);
-	exit->x = x;
-	exit->y = y;
-	return (exit);
-}
-
-void	exit_free(t_coord *exit)
-{
-	free(exit);
+	map = game->tilemap.map;
+	y = 0;
+	while (y < game->tilemap.height)
+	{
+		x = 0;
+		while (x < game->tilemap.width)
+		{
+			if (map[y][x] == 'E')
+			{
+				game->exit.x = x;
+				game->exit.y = y;
+				break ;
+			}
+			x++;
+		}
+		y++;
+	}
+	game->exit.enabled = 0;
 }

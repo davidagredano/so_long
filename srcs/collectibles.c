@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   collectibles.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 17:59:12 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/27 15:46:40 by dagredan         ###   ########.fr       */
+/*   Created: 2025/03/27 15:04:09 by dagredan          #+#    #+#             */
+/*   Updated: 2025/03/27 15:10:27 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	main(int argc, char *argv[])
+void	collectibles_init(t_game *game)
 {
-	t_game	*game;
+	char	**map;
+	int		x;
+	int		y;
 
-	if (argc != 2)
-		return (1);
-	game = game_create(argv[1]);
-	if (!game)
-		return (EXIT_FAILURE);
-	log_game_state(game);
-	game_free(game);
+	map = game->tilemap.map;
+	y = 0;
+	while (y < game->tilemap.height)
+	{
+		x = 0;
+		while (x < game->tilemap.width)
+		{
+			if (map[y][x] == 'C')
+				game->collectibles += 1;
+			x++;
+		}
+		y++;
+	}
 }

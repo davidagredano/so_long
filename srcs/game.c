@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.c                                             :+:      :+:    :+:   */
+/*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/26 17:48:10 by dagredan         ###   ########.fr       */
+/*   Created: 2025/03/26 10:59:43 by dagredan          #+#    #+#             */
+/*   Updated: 2025/03/27 15:35:24 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib/libft/libft.h"
-#include "../lib/MLX42/include/MLX42/MLX42.h"
 #include "../includes/so_long.h"
 
-t_data	*data_create(void)
+t_game	*game_create(char *filename)
 {
-	t_data	*data;
+	t_game	*game;
 
-	data = (t_data *)ft_calloc(1, sizeof(t_data));
-	if (!data)
+	game = (t_game *)ft_calloc(1, sizeof(t_game));
+	if (!game)
 		return (NULL);
-	data->map = map_create(); // missing error check
-	data->mlx = mlx_init(300, 300, "so_long", true); // missing error check
-	return (data);
+	if (tilemap_init(game, filename) == -1)
+	{
+		game_free(game);
+		return (NULL);
+	}
+	collectibles_init(game);
+	exit_init(game);
+	player_init(game);
+	movements_init(game);
+	return (game);
 }
 
-void	data_free(t_data *data)
+void	game_free(t_game *game)
 {
-	if (data->map)
-		map_free(data->map);
-	if (data->mlx)
-		mlx_terminate(data->mlx);
-	free(data);
+	if (game->tilemap.map)
+		map_free(game->tilemap.map, game->tilemap.height);
+	free(game);
 }
