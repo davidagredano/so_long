@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:48:54 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 20:58:16 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 21:25:56 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void	move_keyhook(mlx_key_data_t keydata, void *param)
 	{
 		if (target_tile == 'C')
 			collectible_collect(data, target);
+		else if (target_tile == 'E' && data->game->collectibles == 0)
+			mlx_close_window(data->graphics->mlx);
 		player_move(data, target);
 	}
 }
