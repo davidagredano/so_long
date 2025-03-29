@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 10:59:43 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 15:34:20 by dagredan         ###   ########.fr       */
+/*   Created: 2025/03/29 12:48:54 by dagredan          #+#    #+#             */
+/*   Updated: 2025/03/29 15:35:29 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_game	*game_create(char *filename)
+static void	move_keyhook(mlx_key_data_t keydata, void *param)
 {
-	t_game	*game;
+	t_data	*data;
+	char	target_tile;
 
-	game = (t_game *)ft_calloc(1, sizeof(t_game));
-	if (!game)
-		return (NULL);
-	if (tilemap_init(game, filename) == -1)
+	data = (t_data *)param;
+	target_tile = '\0';
+	if (keydata.action == MLX_PRESS)
+		target_tile = tilemap_get_target_tile(data->game, keydata.key);
+	if (target_tile != '\0' && target_tile != '1')
 	{
-		game_free(game);
-		return (NULL);
+		player_move(data->game, data->graphics->images, keydata.key);
 	}
-	collectibles_init(game);
-	exit_init(game);
-	player_init(game);
-	movements_init(game);
-	return (game);
 }
 
-void	game_free(t_game *game)
+void	hooks_setup(t_data *data)
 {
-	if (game->tilemap.map)
-		map_free(game->tilemap.map, game->tilemap.height);
-	free(game);
+	mlx_key_hook(data->graphics->mlx, move_keyhook, data);
 }

@@ -6,12 +6,10 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 15:49:11 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 00:23:30 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:34:46 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
-#include "libft.h"
 #include "so_long.h"
 
 void	textures_free(t_textures *textures)

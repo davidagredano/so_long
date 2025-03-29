@@ -6,12 +6,10 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 22:36:53 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 10:51:57 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:34:34 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/MLX42.h"
-#include "libft.h"
 #include "so_long.h"
 
 t_graphics	*graphics_create(t_game *game)
@@ -87,5 +85,6 @@ int	graphics_draw_game(t_graphics *graphics, t_game *game)
 		}
 		y++;
 	}
+	images_set_depth(graphics->images);
 	return (0);
 }

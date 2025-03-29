@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "so_long.h"
 
 void	log_game_state(t_game *game)

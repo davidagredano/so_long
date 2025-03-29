@@ -6,11 +6,10 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 00:22:04 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:37:29 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "so_long.h"
 
 int	tilemap_init(t_game *game, char *filename)
@@ -46,4 +45,17 @@ void	map_free(char **map, int height)
 		row++;
 	}
 	free(map);
+}
+
+char	tilemap_get_target_tile(t_game *game, keys_t key)
+{
+	if (key == MLX_KEY_W)
+		return (game->tilemap.map[game->player.y - 1][game->player.x]);
+	else if (key == MLX_KEY_A)
+		return (game->tilemap.map[game->player.y][game->player.x - 1]);
+	else if (key == MLX_KEY_S)
+		return (game->tilemap.map[game->player.y + 1][game->player.x]);
+	else if (key == MLX_KEY_D)
+		return (game->tilemap.map[game->player.y][game->player.x + 1]);
+	return (0);
 }

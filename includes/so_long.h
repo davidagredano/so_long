@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 12:37:58 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:33:51 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # include <stdlib.h> // EXIT_FAILURE
 # include "MLX42/MLX42.h"
+# include "libft.h"
 
 /* Game */
 typedef struct s_player
@@ -87,6 +88,7 @@ void		game_free(t_game *game);
 /* Tilemap */
 int			tilemap_init(t_game *game, char *filename);
 void		map_free(char **map, int height);
+char		tilemap_get_target_tile(t_game *game, keys_t key);
 
 /* Collectibles */
 void		collectibles_init(t_game *game);
@@ -96,6 +98,7 @@ void		exit_init(t_game *game);
 
 /* Player */
 void		player_init(t_game *game);
+void		player_move(t_game *game, t_images *images, keys_t key);
 
 /* Movements */
 void		movements_init(t_game *game);
@@ -112,6 +115,10 @@ void		textures_free(t_textures *textures);
 
 /* Images */
 t_images	*images_create(mlx_t *mlx);
+void		images_set_depth(t_images *images);
+
+/* Hooks */
+void		hooks_setup(t_data *data);
 
 /* Debug */
 void		log_game_state(t_game *game);
