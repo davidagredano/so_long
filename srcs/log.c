@@ -36,6 +36,5 @@ void	log_game_state(t_game *game)
 	ft_printf("[L] Player '%c'", map[game->player.y][game->player.x]);
 	ft_printf(" (%d, %d)\n", game->player.x, game->player.y);
 	ft_printf("[L] Collectibles: %d\n", game->collectibles);
-	ft_printf("[L] Exit enabled: %d\n", game->exit.enabled);
 	ft_printf("Movements: %d\n", game->movements);
 }

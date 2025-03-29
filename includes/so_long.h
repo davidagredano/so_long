@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 15:33:51 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 20:13:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,11 @@
 # include "libft.h"
 
 /* Game */
-typedef struct s_player
+typedef struct s_coord
 {
 	int	x;
 	int	y;
-}			t_player;
-
-typedef struct s_exit
-{
-	int	x;
-	int	y;
-	int	enabled;
-}			t_exit;
+}			t_coord;
 
 typedef struct s_tilemap
 {
@@ -44,8 +37,8 @@ typedef struct s_game
 {
 	t_tilemap	tilemap;
 	int			collectibles;
-	t_exit		exit;
-	t_player	player;
+	t_coord		exit;
+	t_coord		player;
 	int			movements;
 }			t_game;
 
@@ -92,13 +85,14 @@ char		tilemap_get_target_tile(t_game *game, keys_t key);
 
 /* Collectibles */
 void		collectibles_init(t_game *game);
+void		collectible_collect(t_data *data, t_coord target);
 
 /* Exit */
 void		exit_init(t_game *game);
 
 /* Player */
 void		player_init(t_game *game);
-void		player_move(t_game *game, t_images *images, keys_t key);
+void		player_move(t_data *data, t_coord target);
 
 /* Movements */
 void		movements_init(t_game *game);

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:43:34 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 15:33:19 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 20:48:48 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,17 @@ void	player_init(t_game *game)
 	}
 }
 
-void	player_move(t_game *game, t_images *images, keys_t key)
+void	player_move(t_data *data, t_coord target)
 {
-	if (key == MLX_KEY_W)
-	{
-		game->player.y -= 1;
-		images->player->instances[0].y -= 1 * TILE_SIZE;
-	}
-	else if (key == MLX_KEY_A)
-	{
-		game->player.x -= 1;
-		images->player->instances[0].x -= 1 * TILE_SIZE;
-	}
-	else if (key == MLX_KEY_S)
-	{
-		game->player.y += 1;
-		images->player->instances[0].y += 1 * TILE_SIZE;
-	}
-	else if (key == MLX_KEY_D)
-	{
-		game->player.x += 1;
-		images->player->instances[0].x += 1 * TILE_SIZE;
-	}
+	t_coord	current;
+
+	current = data->game->player;
+	if (current.x == data->game->exit.x && current.y == data->game->exit.y)
+		data->game->tilemap.map[current.y][current.x] = 'E';
+	else
+		data->game->tilemap.map[current.y][current.x] = '0';
+	data->game->tilemap.map[target.y][target.x] = 'P';
+	data->game->player = target;
+	data->graphics->images->player->instances[0].x = target.x * TILE_SIZE;
+	data->graphics->images->player->instances[0].y = target.y * TILE_SIZE;
 }

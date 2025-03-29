@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:43:34 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 00:22:25 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 19:38:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,4 @@ void	exit_init(t_game *game)
 		}
 		y++;
 	}
-	game->exit.enabled = 0;
 }

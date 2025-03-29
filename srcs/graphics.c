@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 22:36:53 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 15:34:34 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 20:49:11 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,30 @@ void	graphics_free(t_graphics *graphics)
 
 static int	graphics_draw_tile(t_graphics *graphics, char tile, int x, int y)
 {
-	int	ret;
+	t_images	*images;
+	int			ret;
 
+	images = graphics->images;
+	x *= TILE_SIZE;
+	y *= TILE_SIZE;
 	if (tile == '0' || tile == 'C' || tile == 'E' || tile == 'P')
-		ret = mlx_image_to_window(graphics->mlx, graphics->images->floor,
-				x * TILE_SIZE, y * TILE_SIZE);
+		ret = mlx_image_to_window(graphics->mlx, images->floor, x, y);
 	else if (tile == '1')
-		ret = mlx_image_to_window(graphics->mlx, graphics->images->wall,
-				x * TILE_SIZE, y * TILE_SIZE);
+		ret = mlx_image_to_window(graphics->mlx, images->wall, x, y);
 	if (tile == 'C')
-		ret = mlx_image_to_window(graphics->mlx, graphics->images->collectible,
-				x * TILE_SIZE, y * TILE_SIZE);
+		ret = mlx_image_to_window(graphics->mlx, images->collectible, x, y);
 	else if (tile == 'E')
-		ret = mlx_image_to_window(graphics->mlx, graphics->images->exit,
-				x * TILE_SIZE, y * TILE_SIZE);
+		ret = mlx_image_to_window(graphics->mlx, images->exit, x, y);
 	else if (tile == 'P')
-		ret = mlx_image_to_window(graphics->mlx, graphics->images->player,
-				x * TILE_SIZE, y * TILE_SIZE);
+		ret = mlx_image_to_window(graphics->mlx, images->player, x, y);
 	return (ret);
 }
 
 int	graphics_draw_game(t_graphics *graphics, t_game *game)
 {
-	char		**map;
-	int			x;
-	int			y;
+	char	**map;
+	int		x;
+	int		y;
 
 	map = game->tilemap.map;
 	y = 0;
