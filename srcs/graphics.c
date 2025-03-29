@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 22:36:53 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 20:49:11 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 22:14:07 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_graphics	*graphics_create(t_game *game)
 	if (!graphics)
 		return (NULL);
 	graphics->mlx = mlx_init(game->tilemap.width * TILE_SIZE,
-			game->tilemap.height * TILE_SIZE, "so_long", true);
+			game->tilemap.height * TILE_SIZE, "so_long", false);
 	if (!graphics->mlx)
 	{
 		graphics_free(graphics);
