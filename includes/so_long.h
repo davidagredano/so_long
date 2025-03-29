@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 20:13:19 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 21:33:02 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void		player_move(t_data *data, t_coord target);
 
 /* Movements */
 void		movements_init(t_game *game);
+void		movements_add_one(t_game *game);
+void		movements_log(t_game *game);
 
 /* Graphics */
 t_graphics	*graphics_create(t_game *game);

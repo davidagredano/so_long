@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:48:54 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 21:25:56 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 21:46:29 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ static void	move_keyhook(mlx_key_data_t keydata, void *param)
 		target = get_target_coord(data, keydata.key);
 		target_tile = data->game->tilemap.map[target.y][target.x];
 	}
-	if (target_tile != '\0' && target_tile != '1')
+	if (target_tile != '\0' && ft_strchr("0CE", target_tile))
 	{
+		movements_add_one(data->game);
+		movements_log(data->game);
 		if (target_tile == 'C')
 			collectible_collect(data, target);
 		else if (target_tile == 'E' && data->game->collectibles == 0)
