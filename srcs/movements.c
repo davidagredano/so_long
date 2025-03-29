@@ -6,11 +6,11 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 15:12:21 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/27 15:12:48 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 00:22:53 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
 void	movements_init(t_game *game)
 {

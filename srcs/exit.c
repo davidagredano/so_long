@@ -6,11 +6,11 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:43:34 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/27 15:02:38 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 00:22:25 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "so_long.h"
 
 void	exit_init(t_game *game)
 {

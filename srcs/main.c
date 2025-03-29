@@ -6,21 +6,43 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:59:12 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/27 15:46:40 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 12:41:49 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/so_long.h"
+#include "MLX42/MLX42.h"
+#include "so_long.h"
 
 int	main(int argc, char *argv[])
 {
-	t_game	*game;
+	t_data	data;
 
 	if (argc != 2)
 		return (1);
-	game = game_create(argv[1]);
-	if (!game)
+	/* Crate and initialize game state */
+	data.game = game_create(argv[1]);
+	if (!data.game)
 		return (EXIT_FAILURE);
-	log_game_state(game);
-	game_free(game);
+	/* Create a window, load images and put them in the window */
+	data.graphics = graphics_create(data.game);
+	if (!data.graphics)
+	{
+		game_free(data.game);
+		return (EXIT_FAILURE);
+	}
+	/* Draw the game initial state to the window */
+	if (graphics_draw_game(data.graphics, data.game) == -1)
+	{
+		graphics_free(data.graphics);
+		game_free(data.game);
+		return (EXIT_FAILURE);
+	}
+	/* Start game loop */
+	mlx_loop(data.graphics->mlx);
+	/* Close the window and free all the images */
+	graphics_free(data.graphics);
+	/* Log game state in the terminal */
+	log_game_state(data.game);
+	/* Free game state data */
+	game_free(data.game);
 }

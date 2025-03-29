@@ -1,13 +1,15 @@
-CC := cc
-CFLAGS := -MMD -Wall -Wextra -Werror
-COMPILE.c := $(CC) $(CFLAGS) -c
-OUTPUT_OPTION = -o $@
-
 LIBFT_DIR := lib/libft
 LIBFT := $(LIBFT_DIR)/libft.a
 
 LIBMLX_DIR := lib/MLX42
 LIBMLX := $(LIBMLX_DIR)/build/libmlx42.a
+
+CC := cc
+WFLAGS := -Wall -Wextra -Werror
+IDIRS := -I$(LIBMLX_DIR)/include -I$(LIBFT_DIR) -Iincludes
+CFLAGS := -MMD $(WFLAGS) $(IDIRS) -g
+COMPILE.c := $(CC) $(CFLAGS) -c
+OUTPUT_OPTION = -o $@
 
 LDFLAGS := -L$(LIBFT_DIR) -L$(LIBMLX_DIR)/build
 LINK.o := $(CC) $(LDFLAGS)
@@ -18,7 +20,8 @@ RMDIR := rm -rf
 
 NAME := so_long
 SRCS_DIR := srcs
-SRCS := main.c game.c tilemap.c collectibles.c exit.c player.c movements.c log.c
+SRCS := main.c game.c tilemap.c collectibles.c exit.c player.c movements.c \
+		graphics.c textures.c images.c log.c
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
@@ -67,7 +70,7 @@ $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(LIBMLX):
-	cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build
+	cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build -DDEBUG=1
 	make -C $(LIBMLX_DIR)/build -j4
 
 

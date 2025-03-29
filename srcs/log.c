@@ -1,5 +1,5 @@
-#include "../lib/libft/libft.h"
-#include "../includes/so_long.h"
+#include "libft.h"
+#include "so_long.h"
 
 void	log_game_state(t_game *game)
 {

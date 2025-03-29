@@ -6,12 +6,12 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/27 15:31:27 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 00:22:04 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/libft/libft.h"
-#include "../includes/so_long.h"
+#include "libft.h"
+#include "so_long.h"
 
 int	tilemap_init(t_game *game, char *filename)
 {
