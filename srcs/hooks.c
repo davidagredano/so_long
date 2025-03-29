@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:48:54 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 21:46:29 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/29 22:09:20 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,22 @@ static void	move_keyhook(mlx_key_data_t keydata, void *param)
 	char	target_tile;
 
 	data = (t_data *)param;
-	target_tile = '\0';
 	if (keydata.action == MLX_PRESS)
 	{
+		if (keydata.key == MLX_KEY_ESCAPE)
+			mlx_close_window(data->graphics->mlx);
 		target = get_target_coord(data, keydata.key);
 		target_tile = data->game->tilemap.map[target.y][target.x];
-	}
-	if (target_tile != '\0' && ft_strchr("0CE", target_tile))
-	{
-		movements_add_one(data->game);
-		movements_log(data->game);
-		if (target_tile == 'C')
-			collectible_collect(data, target);
-		else if (target_tile == 'E' && data->game->collectibles == 0)
-			mlx_close_window(data->graphics->mlx);
-		player_move(data, target);
+		if (target_tile != '\0' && ft_strchr("0CE", target_tile))
+		{
+			movements_add_one(data->game);
+			movements_log(data->game);
+			if (target_tile == 'C')
+				collectible_collect(data, target);
+			else if (target_tile == 'E' && data->game->collectibles == 0)
+				mlx_close_window(data->graphics->mlx);
+			player_move(data, target);
+		}
 	}
 }
 
