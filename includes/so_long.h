@@ -15,6 +15,7 @@
 
 # define TILE_SIZE 100
 
+# include <fcntl.h>  // open
 # include <stdlib.h> // EXIT_FAILURE
 # include "MLX42/MLX42.h"
 # include "libft.h"
@@ -69,12 +70,13 @@ typedef struct s_data
 
 
 /* Game */
-void	game_init(t_game *game, char *filename);
+void	game_init(t_data *data, char *filename);
 
 /* Map */
-char	**map_create(t_game *game, char *filename);
-t_coord	map_entity_find(t_game *game, char entity);
-int		map_entity_count(t_game *game, char entity);
+char	**map_create(t_data *data, char *filename);
+int		map_count_rows(t_data *data, char *filename);
+t_coord	map_entity_find(t_data *data, char entity);
+int		map_entity_count(t_data *data, char entity);
 void	map_destroy(t_data *data);
 
 /* Collectibles */
