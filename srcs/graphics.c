@@ -6,20 +6,13 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 22:36:53 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 22:14:07 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:11:33 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	graphics_free(t_data *data)
-{
-	if (data->mlx)
-		mlx_terminate(data->mlx);
-	textures_free(data);
-}
-
-int	graphics_init(t_data *data)
+void	graphics_init(t_data *data)
 {
 	int			width;
 	int			height;
@@ -28,18 +21,9 @@ int	graphics_init(t_data *data)
 	height = data->game.map_height * TILE_SIZE;
 	data->mlx = mlx_init(width, height, "so_long", false);
 	if (!data->mlx)
-		return (-1);
-	if (textures_load(data) == -1)
-	{
-		graphics_free(data);
-		return (-1);
-	}
-	if (images_create(data) == -1)
-	{
-		graphics_free(data);
-		return (-1);
-	}
-	return (0);
+		cleanup_exit(data, NULL);
+	textures_load(data);
+	images_create(data);
 }
 
 static void	instances_set_depth(mlx_image_t *image, int zdepth)
@@ -84,7 +68,7 @@ static int	graphics_draw_tile(t_data *data, char type, int x, int y)
 	return (ret);
 }
 
-int	graphics_draw_game(t_data *data)
+void	graphics_draw_game(t_data *data)
 {
 	int		x;
 	int		y;
@@ -96,11 +80,10 @@ int	graphics_draw_game(t_data *data)
 		while (x < data->game.map_width)
 		{
 			if (graphics_draw_tile(data, data->game.map[y][x], x, y) == -1)
-				return (-1);
+				cleanup_exit(data, NULL);
 			x++;
 		}
 		y++;
 	}
 	images_set_depth(data);
-	return (0);
 }

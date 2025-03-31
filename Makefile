@@ -21,7 +21,7 @@ RMDIR := rm -rf
 NAME := so_long
 SRCS_DIR := srcs
 SRCS := main.c game.c map.c collectibles.c player.c movements.c \
-		graphics.c textures.c images.c hooks.c log.c
+		graphics.c textures.c images.c hooks.c exit.c log.c
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
@@ -70,7 +70,7 @@ $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(LIBMLX):
-	cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build -DDEBUG=1
+	cmake $(LIBMLX_DIR) -B $(LIBMLX_DIR)/build
 	make -C $(LIBMLX_DIR)/build -j4
 
 

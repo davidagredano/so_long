@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/29 21:33:02 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:10:30 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,13 @@ typedef struct s_data
 
 
 /* Game */
-int		game_init(t_game *game, char *filename);
-void	game_free(t_game *game);
+void	game_init(t_game *game, char *filename);
 
 /* Map */
 char	**map_create(t_game *game, char *filename);
 t_coord	map_entity_find(t_game *game, char entity);
 int		map_entity_count(t_game *game, char entity);
-void	map_free(t_game *game);
+void	map_destroy(t_data *data);
 
 /* Collectibles */
 void	collectible_collect(t_data *data, t_coord target);
@@ -89,19 +88,22 @@ void	movements_add_one(t_game *game);
 void	movements_log(t_game *game);
 
 /* Graphics */
-int		graphics_init(t_data *data);
-int		graphics_draw_game(t_data *data);
-void	graphics_free(t_data *data);
+void	graphics_init(t_data *data);
+void	graphics_draw_game(t_data *data);
 
 /* Textures */
-int		textures_load(t_data *data);
-void	textures_free(t_data *data);
+void	textures_load(t_data *data);
+void	textures_destroy(t_data *data);
 
 /* Images */
-int		images_create(t_data *data);
+void	images_create(t_data *data);
 
 /* Hooks */
 void	hooks_setup(t_data *data);
+
+/* Exit */
+void	cleanup(t_data *data);
+void	cleanup_exit(t_data *data, char *message);
 
 /* Debug */
 void	log_game_state(t_game *game);

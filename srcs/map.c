@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/31 11:11:32 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/03/31 19:12:05 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ char	**map_create(t_game *game, char *filename)
 	return (map);
 }
 
-void	map_free(t_game *game)
+void	map_destroy(t_data *data)
 {
 	int	row;
 
 	row = 0;
-	while (row < game->map_height)
+	while (row < data->game.map_height)
 	{
-		if (game->map[row])
-			free(game->map[row]);
+		if (data->game.map[row])
+			free(data->game.map[row]);
 		row++;
 	}
-	free(game->map);
-	game->map = NULL;
+	free(data->game.map);
+	data->game.map = NULL;
 }
 
 t_coord	map_entity_find(t_game *game, char type)
