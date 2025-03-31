@@ -33,19 +33,19 @@ void	textures_destroy(t_data *data)
 
 void	textures_load(t_data *data)
 {
-	data->textures.floor = mlx_load_png("./assets/floor.png");
+	data->textures.floor = mlx_load_png("./textures/floor.png");
 	if (!data->textures.floor)
 		cleanup_exit(data, NULL);
-	data->textures.wall = mlx_load_png("./assets/wall.png");
+	data->textures.wall = mlx_load_png("./textures/wall.png");
 	if (!data->textures.wall)
 		cleanup_exit(data, NULL);
-	data->textures.collectible = mlx_load_png("./assets/collectible.png");
+	data->textures.collectible = mlx_load_png("./textures/collectible.png");
 	if (!data->textures.collectible)
 		cleanup_exit(data, NULL);
-	data->textures.exit = mlx_load_png("./assets/exit.png");
+	data->textures.exit = mlx_load_png("./textures/exit.png");
 	if (!data->textures.exit)
 		cleanup_exit(data, NULL);
-	data->textures.player = mlx_load_png("./assets/player.png");
+	data->textures.player = mlx_load_png("./textures/player.png");
 	if (!data->textures.player)
 		cleanup_exit(data, NULL);
 }
