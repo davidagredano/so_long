@@ -12,25 +12,6 @@
 
 #include "so_long.h"
 
-void	collectibles_init(t_game *game)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < game->map_height)
-	{
-		x = 0;
-		while (x < game->map_width)
-		{
-			if (game->map[y][x] == 'C')
-				game->collectibles += 1;
-			x++;
-		}
-		y++;
-	}
-}
-
 void	collectible_collect(t_data *data, t_coord target)
 {
 	mlx_instance_t	*instance;

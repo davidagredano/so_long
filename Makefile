@@ -20,7 +20,7 @@ RMDIR := rm -rf
 
 NAME := so_long
 SRCS_DIR := srcs
-SRCS := main.c game.c map.c collectibles.c exit.c player.c movements.c \
+SRCS := main.c game.c map.c collectibles.c player.c movements.c \
 		graphics.c textures.c images.c hooks.c log.c
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)

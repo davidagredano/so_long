@@ -12,11 +12,6 @@
 
 #include "so_long.h"
 
-void	movements_init(t_game *game)
-{
-	game->movements = 0;
-}
-
 void	movements_add_one(t_game *game)
 {
 	game->movements++;

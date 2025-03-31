@@ -12,31 +12,6 @@
 
 #include "so_long.h"
 
-void	player_init(t_game *game)
-{
-	char	**map;
-	int		x;
-	int		y;
-
-	map = game->map;
-	y = 0;
-	while (y < game->map_height)
-	{
-		x = 0;
-		while (x < game->map_width)
-		{
-			if (map[y][x] == 'P')
-			{
-				game->player.x = x;
-				game->player.y = y;
-				break ;
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
 void	player_move(t_data *data, t_coord target)
 {
 	t_coord	current;

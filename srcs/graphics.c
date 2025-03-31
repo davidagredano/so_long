@@ -47,7 +47,7 @@ void	graphics_free(t_graphics *graphics)
 	free(graphics);
 }
 
-static int	graphics_draw_tile(t_graphics *graphics, char tile, int x, int y)
+static int	graphics_draw_tile(t_graphics *graphics, char type, int x, int y)
 {
 	t_images	*images;
 	int			ret;
@@ -55,15 +55,15 @@ static int	graphics_draw_tile(t_graphics *graphics, char tile, int x, int y)
 	images = graphics->images;
 	x *= TILE_SIZE;
 	y *= TILE_SIZE;
-	if (tile == '0' || tile == 'C' || tile == 'E' || tile == 'P')
+	if (type == '0' || type == 'C' || type == 'E' || type == 'P')
 		ret = mlx_image_to_window(graphics->mlx, images->floor, x, y);
-	else if (tile == '1')
+	else if (type == '1')
 		ret = mlx_image_to_window(graphics->mlx, images->wall, x, y);
-	if (tile == 'C')
+	if (type == 'C')
 		ret = mlx_image_to_window(graphics->mlx, images->collectible, x, y);
-	else if (tile == 'E')
+	else if (type == 'E')
 		ret = mlx_image_to_window(graphics->mlx, images->exit, x, y);
-	else if (tile == 'P')
+	else if (type == 'P')
 		ret = mlx_image_to_window(graphics->mlx, images->player, x, y);
 	return (ret);
 }

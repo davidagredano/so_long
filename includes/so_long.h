@@ -73,23 +73,19 @@ typedef struct s_data
 int			game_init(t_game *game, char *filename);
 void		game_free(t_game *game);
 
-/* Tilemap */
-int			map_init(t_game *game, char *filename);
+/* Map */
+char		**map_create(t_game *game, char *filename);
 void		map_free(t_game *game);
+t_coord		map_entity_find(t_game *game, char entity);
+int			map_entity_count(t_game *game, char entity);
 
 /* Collectibles */
-void		collectibles_init(t_game *game);
 void		collectible_collect(t_data *data, t_coord target);
 
-/* Exit */
-void		exit_init(t_game *game);
-
 /* Player */
-void		player_init(t_game *game);
 void		player_move(t_data *data, t_coord target);
 
 /* Movements */
-void		movements_init(t_game *game);
 void		movements_add_one(t_game *game);
 void		movements_log(t_game *game);
 
