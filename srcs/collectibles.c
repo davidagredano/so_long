@@ -21,9 +21,9 @@ void	collectible_collect(t_data *data, t_coord target)
 	i = 0;
 	target.x *= TILE_SIZE;
 	target.y *= TILE_SIZE;
-	while (i < data->graphics->images->collectible->count)
+	while (i < data->images.collectible->count)
 	{
-		instance = &data->graphics->images->collectible->instances[i];
+		instance = &data->images.collectible->instances[i];
 		if (instance->x == target.x && instance->y == target.y)
 		{
 			instance->enabled = false;

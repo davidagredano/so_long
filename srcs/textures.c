@@ -12,67 +12,48 @@
 
 #include "so_long.h"
 
-void	textures_free(t_textures *textures)
+void	textures_free(t_data *data)
 {
-	if (textures->floor)
-		mlx_delete_texture(textures->floor);
-	if (textures->wall)
-		mlx_delete_texture(textures->wall);
-	if (textures->collectible)
-		mlx_delete_texture(textures->collectible);
-	if (textures->exit)
-		mlx_delete_texture(textures->exit);
-	if (textures->player)
-		mlx_delete_texture(textures->player);
-	free(textures);
+	if (data->textures.floor)
+		mlx_delete_texture(data->textures.floor);
+	if (data->textures.wall)
+		mlx_delete_texture(data->textures.wall);
+	if (data->textures.collectible)
+		mlx_delete_texture(data->textures.collectible);
+	if (data->textures.exit)
+		mlx_delete_texture(data->textures.exit);
+	if (data->textures.player)
+		mlx_delete_texture(data->textures.player);
+	data->textures.floor = NULL;
+	data->textures.wall = NULL;
+	data->textures.collectible = NULL;
+	data->textures.exit = NULL;
+	data->textures.player = NULL;
 }
 
-t_textures	*textures_load(void)
+static int	textures_is_some_null(t_data *data)
 {
-	t_textures	*textures;
-
-	textures = (t_textures *)ft_calloc(1, sizeof(t_textures));
-	if (!textures)
-		return (NULL);
-	textures->floor = mlx_load_png("./assets/floor.png");
-	if (!textures->floor)
-		return (NULL);
-	textures->wall = mlx_load_png("./assets/wall.png");
-	if (!textures->wall)
-		return (NULL);
-	textures->collectible = mlx_load_png("./assets/collectible.png");
-	if (!textures->collectible)
-		return (NULL);
-	textures->exit = mlx_load_png("./assets/exit.png");
-	if (!textures->exit)
-		return (NULL);
-	textures->player = mlx_load_png("./assets/player.png");
-	if (!textures->player)
-		return (NULL);
-	return (textures);
+	if (!data->textures.floor)
+		return (1);
+	if (!data->textures.wall)
+		return (1);
+	if (!data->textures.collectible)
+		return (1);
+	if (!data->textures.exit)
+		return (1);
+	if (!data->textures.player)
+		return (1);
+	return (0);
 }
 
-t_images	*textures_to_images(mlx_t *mlx, t_textures *textures)
+int	textures_load(t_data *data)
 {
-	t_images	*images;
-
-	images = (t_images *)ft_calloc(1, sizeof(t_images));
-	if (!images)
-		return (NULL);
-	images->floor = mlx_texture_to_image(mlx, textures->floor);
-	if (!images->floor)
-		return (NULL);
-	images->wall = mlx_texture_to_image(mlx, textures->wall);
-	if (!images->wall)
-		return (NULL);
-	images->collectible = mlx_texture_to_image(mlx, textures->collectible);
-	if (!images->collectible)
-		return (NULL);
-	images->exit = mlx_texture_to_image(mlx, textures->exit);
-	if (!images->exit)
-		return (NULL);
-	images->player = mlx_texture_to_image(mlx, textures->player);
-	if (!images->player)
-		return (NULL);
-	return (images);
+	data->textures.floor = mlx_load_png("./assets/floor.png");
+	data->textures.wall = mlx_load_png("./assets/wall.png");
+	data->textures.collectible = mlx_load_png("./assets/collectible.png");
+	data->textures.exit = mlx_load_png("./assets/exit.png");
+	data->textures.player = mlx_load_png("./assets/player.png");
+	if (textures_is_some_null(data))
+		return (-1);
+	return (0);
 }

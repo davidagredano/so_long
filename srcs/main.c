@@ -20,20 +20,19 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	if (game_init(&data.game, argv[1]) == -1)
 		return (EXIT_FAILURE);
-	data.graphics = graphics_create(&data.game);
-	if (!data.graphics)
+	if (graphics_init(&data) == -1)
 	{
 		game_free(&data.game);
 		return (EXIT_FAILURE);
 	}
-	if (graphics_draw_game(data.graphics, &data.game) == -1)
+	if (graphics_draw_game(&data) == -1)
 	{
-		graphics_free(data.graphics);
+		graphics_free(&data);
 		game_free(&data.game);
 		return (EXIT_FAILURE);
 	}
 	hooks_setup(&data);
-	mlx_loop(data.graphics->mlx);
-	graphics_free(data.graphics);
+	mlx_loop(data.mlx);
+	graphics_free(&data);
 	game_free(&data.game);
 }

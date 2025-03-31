@@ -12,52 +12,34 @@
 
 #include "so_long.h"
 
-static void	images_free(mlx_t *mlx, t_images *images)
+static int	images_is_some_null(t_data *data)
 {
-	if (images->player)
-		mlx_delete_image(mlx, images->player);
-	free(images);
+	if (!data->images.floor)
+		return (1);
+	if (!data->images.wall)
+		return (1);
+	if (!data->images.collectible)
+		return (1);
+	if (!data->images.exit)
+		return (1);
+	if (!data->images.player)
+		return (1);
+	return (0);
 }
 
-t_images	*images_create(mlx_t *mlx)
+int	images_create(t_data *data)
 {
-	t_textures	*textures;
-	t_images	*images;
+	mlx_t		*mlx;
+	t_textures	textures;
 
-	textures = textures_load();
-	if (!textures)
-	{
-		textures_free(textures);
-		return (NULL);
-	}
-	images = textures_to_images(mlx, textures);
-	if (!images)
-	{
-		textures_free(textures);
-		images_free(mlx, images);
-		return (NULL);
-	}
-	textures_free(textures);
-	return (images);
-}
-
-static void	instances_set_depth(mlx_image_t *image, int zdepth)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < image->count)
-	{
-		mlx_set_instance_depth(&image->instances[i], zdepth);
-		i++;
-	}
-}
-
-void	images_set_depth(t_images *images)
-{
-	instances_set_depth(images->floor, 0);
-	instances_set_depth(images->wall, 0);
-	instances_set_depth(images->collectible, 1);
-	instances_set_depth(images->exit, 1);
-	instances_set_depth(images->player, 2);
+	mlx = data->mlx;
+	textures = data->textures;
+	data->images.floor = mlx_texture_to_image(mlx, textures.floor);
+	data->images.wall = mlx_texture_to_image(mlx, textures.wall);
+	data->images.collectible = mlx_texture_to_image(mlx, textures.collectible);
+	data->images.exit = mlx_texture_to_image(mlx, textures.exit);
+	data->images.player = mlx_texture_to_image(mlx, textures.player);
+	if (images_is_some_null(data))
+		return (-1);
+	return (0);
 }

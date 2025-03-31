@@ -23,6 +23,6 @@ void	player_move(t_data *data, t_coord target)
 		data->game.map[current.y][current.x] = '0';
 	data->game.map[target.y][target.x] = 'P';
 	data->game.player = target;
-	data->graphics->images->player->instances[0].x = target.x * TILE_SIZE;
-	data->graphics->images->player->instances[0].y = target.y * TILE_SIZE;
+	data->images.player->instances[0].x = target.x * TILE_SIZE;
+	data->images.player->instances[0].y = target.y * TILE_SIZE;
 }

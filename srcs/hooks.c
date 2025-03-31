@@ -38,7 +38,7 @@ static void	move_keyhook(mlx_key_data_t keydata, void *param)
 	if (keydata.action == MLX_PRESS)
 	{
 		if (keydata.key == MLX_KEY_ESCAPE)
-			mlx_close_window(data->graphics->mlx);
+			mlx_close_window(data->mlx);
 		target = get_target_coord(data, keydata.key);
 		target_tile = data->game.map[target.y][target.x];
 		if (target_tile != '\0' && ft_strchr("0CE", target_tile))
@@ -48,7 +48,7 @@ static void	move_keyhook(mlx_key_data_t keydata, void *param)
 			if (target_tile == 'C')
 				collectible_collect(data, target);
 			else if (target_tile == 'E' && data->game.collectibles == 0)
-				mlx_close_window(data->graphics->mlx);
+				mlx_close_window(data->mlx);
 			player_move(data, target);
 		}
 	}
@@ -56,5 +56,5 @@ static void	move_keyhook(mlx_key_data_t keydata, void *param)
 
 void	hooks_setup(t_data *data)
 {
-	mlx_key_hook(data->graphics->mlx, move_keyhook, data);
+	mlx_key_hook(data->mlx, move_keyhook, data);
 }

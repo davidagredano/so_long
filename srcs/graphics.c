@@ -12,81 +12,95 @@
 
 #include "so_long.h"
 
-t_graphics	*graphics_create(t_game *game)
+void	graphics_free(t_data *data)
 {
-	t_graphics	*graphics;
+	if (data->mlx)
+		mlx_terminate(data->mlx);
+	textures_free(data);
+}
+
+int	graphics_init(t_data *data)
+{
 	int			width;
 	int			height;
 
-	graphics = (t_graphics *)ft_calloc(1, sizeof(t_graphics));
-	if (!graphics)
-		return (NULL);
-	width = game->map_width * TILE_SIZE;
-	height = game->map_height * TILE_SIZE;
-	graphics->mlx = mlx_init(width, height, "so_long", false);
-	if (!graphics->mlx)
+	width = data->game.map_width * TILE_SIZE;
+	height = data->game.map_height * TILE_SIZE;
+	data->mlx = mlx_init(width, height, "so_long", false);
+	if (!data->mlx)
+		return (-1);
+	if (textures_load(data) == -1)
 	{
-		graphics_free(graphics);
-		return (NULL);
+		graphics_free(data);
+		return (-1);
 	}
-	graphics->images = images_create(graphics->mlx);
-	if (!graphics->images)
+	if (images_create(data) == -1)
 	{
-		graphics_free(graphics);
-		return (NULL);
+		graphics_free(data);
+		return (-1);
 	}
-	return (graphics);
+	return (0);
 }
 
-void	graphics_free(t_graphics *graphics)
+static void	instances_set_depth(mlx_image_t *image, int zdepth)
 {
-	if (graphics->mlx)
-		mlx_terminate(graphics->mlx);
-	if (graphics->images)
-		free(graphics->images);
-	free(graphics);
+	size_t	i;
+
+	i = 0;
+	while (i < image->count)
+	{
+		mlx_set_instance_depth(&image->instances[i], zdepth);
+		i++;
+	}
 }
 
-static int	graphics_draw_tile(t_graphics *graphics, char type, int x, int y)
+static void	images_set_depth(t_data *data)
 {
-	t_images	*images;
-	int			ret;
+	instances_set_depth(data->images.floor, 0);
+	instances_set_depth(data->images.wall, 0);
+	instances_set_depth(data->images.collectible, 1);
+	instances_set_depth(data->images.exit, 1);
+	instances_set_depth(data->images.player, 2);
+}
 
-	images = graphics->images;
+static int	graphics_draw_tile(t_data *data, char type, int x, int y)
+{
+	int	ret;
+
 	x *= TILE_SIZE;
 	y *= TILE_SIZE;
 	if (type == '0' || type == 'C' || type == 'E' || type == 'P')
-		ret = mlx_image_to_window(graphics->mlx, images->floor, x, y);
+		ret = mlx_image_to_window(data->mlx, data->images.floor, x, y);
 	else if (type == '1')
-		ret = mlx_image_to_window(graphics->mlx, images->wall, x, y);
+		ret = mlx_image_to_window(data->mlx, data->images.wall, x, y);
+	if (ret == -1)
+		return (ret);
 	if (type == 'C')
-		ret = mlx_image_to_window(graphics->mlx, images->collectible, x, y);
+		ret = mlx_image_to_window(data->mlx, data->images.collectible, x, y);
 	else if (type == 'E')
-		ret = mlx_image_to_window(graphics->mlx, images->exit, x, y);
+		ret = mlx_image_to_window(data->mlx, data->images.exit, x, y);
 	else if (type == 'P')
-		ret = mlx_image_to_window(graphics->mlx, images->player, x, y);
+		ret = mlx_image_to_window(data->mlx, data->images.player, x, y);
 	return (ret);
 }
 
-int	graphics_draw_game(t_graphics *graphics, t_game *game)
+int	graphics_draw_game(t_data *data)
 {
-	char	**map;
 	int		x;
 	int		y;
 
-	map = game->map;
 	y = 0;
-	while (y < game->map_height)
+	while (y < data->game.map_height)
 	{
 		x = 0;
-		while (x < game->map_width)
+		while (x < data->game.map_width)
 		{
-			if (graphics_draw_tile(graphics, map[y][x], x, y) == -1)
+			if (graphics_draw_tile(data, data->game.map[y][x], x, y) == -1)
 				return (-1);
 			x++;
 		}
 		y++;
 	}
-	images_set_depth(graphics->images);
+	images_set_depth(data);
 	return (0);
 }
