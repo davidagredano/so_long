@@ -14,18 +14,16 @@
 
 void	collectibles_init(t_game *game)
 {
-	char	**map;
 	int		x;
 	int		y;
 
-	map = game->tilemap.map;
 	y = 0;
-	while (y < game->tilemap.height)
+	while (y < game->map_height)
 	{
 		x = 0;
-		while (x < game->tilemap.width)
+		while (x < game->map_width)
 		{
-			if (map[y][x] == 'C')
+			if (game->map[y][x] == 'C')
 				game->collectibles += 1;
 			x++;
 		}
@@ -38,7 +36,7 @@ void	collectible_collect(t_data *data, t_coord target)
 	mlx_instance_t	*instance;
 	size_t			i;
 
-	data->game->collectibles -= 1;
+	data->game.collectibles -= 1;
 	i = 0;
 	target.x *= TILE_SIZE;
 	target.y *= TILE_SIZE;

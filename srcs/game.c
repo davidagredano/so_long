@@ -12,28 +12,22 @@
 
 #include "so_long.h"
 
-t_game	*game_create(char *filename)
+int	game_init(t_game *game, char *filename)
 {
-	t_game	*game;
-
-	game = (t_game *)ft_calloc(1, sizeof(t_game));
-	if (!game)
-		return (NULL);
-	if (tilemap_init(game, filename) == -1)
+	if (map_init(game, filename) == -1)
 	{
 		game_free(game);
-		return (NULL);
+		return (-1);
 	}
 	collectibles_init(game);
 	exit_init(game);
 	player_init(game);
 	movements_init(game);
-	return (game);
+	return (0);
 }
 
 void	game_free(t_game *game)
 {
-	if (game->tilemap.map)
-		map_free(game->tilemap.map, game->tilemap.height);
-	free(game);
+	if (game->map)
+		map_free(game);
 }

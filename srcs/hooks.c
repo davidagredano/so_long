@@ -16,7 +16,7 @@ static t_coord	get_target_coord(t_data *data, keys_t key)
 {
 	t_coord	target;
 
-	target = data->game->player;
+	target = data->game.player;
 	if (key == MLX_KEY_W)
 		target.y -= 1;
 	else if (key == MLX_KEY_A)
@@ -40,14 +40,14 @@ static void	move_keyhook(mlx_key_data_t keydata, void *param)
 		if (keydata.key == MLX_KEY_ESCAPE)
 			mlx_close_window(data->graphics->mlx);
 		target = get_target_coord(data, keydata.key);
-		target_tile = data->game->tilemap.map[target.y][target.x];
+		target_tile = data->game.map[target.y][target.x];
 		if (target_tile != '\0' && ft_strchr("0CE", target_tile))
 		{
-			movements_add_one(data->game);
-			movements_log(data->game);
+			movements_add_one(&data->game);
+			movements_log(&data->game);
 			if (target_tile == 'C')
 				collectible_collect(data, target);
-			else if (target_tile == 'E' && data->game->collectibles == 0)
+			else if (target_tile == 'E' && data->game.collectibles == 0)
 				mlx_close_window(data->graphics->mlx);
 			player_move(data, target);
 		}

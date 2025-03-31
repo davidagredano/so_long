@@ -15,12 +15,15 @@
 t_graphics	*graphics_create(t_game *game)
 {
 	t_graphics	*graphics;
+	int			width;
+	int			height;
 
 	graphics = (t_graphics *)ft_calloc(1, sizeof(t_graphics));
 	if (!graphics)
 		return (NULL);
-	graphics->mlx = mlx_init(game->tilemap.width * TILE_SIZE,
-			game->tilemap.height * TILE_SIZE, "so_long", false);
+	width = game->map_width * TILE_SIZE;
+	height = game->map_height * TILE_SIZE;
+	graphics->mlx = mlx_init(width, height, "so_long", false);
 	if (!graphics->mlx)
 	{
 		graphics_free(graphics);
@@ -71,12 +74,12 @@ int	graphics_draw_game(t_graphics *graphics, t_game *game)
 	int		x;
 	int		y;
 
-	map = game->tilemap.map;
+	map = game->map;
 	y = 0;
-	while (y < game->tilemap.height)
+	while (y < game->map_height)
 	{
 		x = 0;
-		while (x < game->tilemap.width)
+		while (x < game->map_width)
 		{
 			if (graphics_draw_tile(graphics, map[y][x], x, y) == -1)
 				return (-1);

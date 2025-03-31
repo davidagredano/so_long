@@ -18,12 +18,12 @@ void	exit_init(t_game *game)
 	int		x;
 	int		y;
 
-	map = game->tilemap.map;
+	map = game->map;
 	y = 0;
-	while (y < game->tilemap.height)
+	while (y < game->map_height)
 	{
 		x = 0;
-		while (x < game->tilemap.width)
+		while (x < game->map_width)
 		{
 			if (map[y][x] == 'E')
 			{

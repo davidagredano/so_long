@@ -17,24 +17,23 @@ int	main(int argc, char *argv[])
 	t_data	data;
 
 	if (argc != 2)
-		return (1);
-	data.game = game_create(argv[1]);
-	if (!data.game)
 		return (EXIT_FAILURE);
-	data.graphics = graphics_create(data.game);
+	if (game_init(&data.game, argv[1]) == -1)
+		return (EXIT_FAILURE);
+	data.graphics = graphics_create(&data.game);
 	if (!data.graphics)
 	{
-		game_free(data.game);
+		game_free(&data.game);
 		return (EXIT_FAILURE);
 	}
-	if (graphics_draw_game(data.graphics, data.game) == -1)
+	if (graphics_draw_game(data.graphics, &data.game) == -1)
 	{
 		graphics_free(data.graphics);
-		game_free(data.game);
+		game_free(&data.game);
 		return (EXIT_FAILURE);
 	}
 	hooks_setup(&data);
 	mlx_loop(data.graphics->mlx);
 	graphics_free(data.graphics);
-	game_free(data.game);
+	game_free(&data.game);
 }

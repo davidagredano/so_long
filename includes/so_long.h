@@ -26,20 +26,15 @@ typedef struct s_coord
 	int	y;
 }			t_coord;
 
-typedef struct s_tilemap
-{
-	int		width;
-	int		height;
-	char	**map;
-}			t_tilemap;
-
 typedef struct s_game
 {
-	t_tilemap	tilemap;
-	int			collectibles;
-	t_coord		exit;
-	t_coord		player;
-	int			movements;
+	int		map_width;
+	int		map_height;
+	char	**map;
+	int		collectibles;
+	t_coord	exit;
+	t_coord	player;
+	int		movements;
 }			t_game;
 
 /* Graphics */
@@ -70,18 +65,17 @@ typedef struct s_graphics
 /* Data */
 typedef struct s_data
 {
-	t_game		*game;
+	t_game		game;
 	t_graphics	*graphics;
 }			t_data;
 
 /* Game */
-t_game		*game_create(char *filename);
+int			game_init(t_game *game, char *filename);
 void		game_free(t_game *game);
 
 /* Tilemap */
-int			tilemap_init(t_game *game, char *filename);
-void		map_free(char **map, int height);
-char		tilemap_get_target_tile(t_game *game, keys_t key);
+int			map_init(t_game *game, char *filename);
+void		map_free(t_game *game);
 
 /* Collectibles */
 void		collectibles_init(t_game *game);
