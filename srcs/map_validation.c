@@ -12,10 +12,51 @@
 
 #include "so_long.h"
 
+static void	explore(t_data *copy, int x, int y)
+{
+	if (copy->game.map[y][x] == '1' || copy->game.map[y][x] == 'X')
+		return ;
+	if (copy->game.map[y][x] == 'C')
+		copy->game.collectibles++;
+	if (copy->game.map[y][x] == 'E')
+	{
+		copy->game.exit.x = x;
+		copy->game.exit.x = y;
+	}
+	copy->game.map[y][x] = 'X';
+	explore(copy, x, y - 1);
+	explore(copy, x + 1, y);
+	explore(copy, x, y + 1);
+	explore(copy, x - 1, y);
+}
+
 /**
- * Checks that the exit and all collectibles are accessible.
+ * Checks that the exit and all collectibles are accessible from the player's
+ * starting position.
  */
-//map_check_valid_path(data) {}
+void	map_check_valid_path(t_data *data, char *filename)
+{
+	t_data	copy;
+
+	ft_bzero(&copy, sizeof(t_data));
+	copy.game.map_height = data->game.map_height;
+	copy.game.map = map_create(data, filename);
+	if (!copy.game.map)
+		cleanup_exit(data, "Failed to allocate memory for map_copy");
+	copy.game.player = map_entity_find(data, 'P');
+	explore(&copy, copy.game.player.x, copy.game.player.y);
+	if (copy.game.exit.x == 0 && copy.game.exit.y == 0)
+	{
+		map_destroy(&copy);
+		cleanup_exit(data, "Invalid map: Exit is not accessible");
+	}
+	else if (copy.game.collectibles != map_entity_count(data, 'C'))
+	{
+		map_destroy(&copy);
+		cleanup_exit(data, "Invalid map: Some collectibles are not accessible");
+	}
+	map_destroy(&copy);
+}
 
 /**
  * Check that is rectangular.
@@ -75,9 +116,9 @@ static void	map_check_characters(t_data *data)
 		cleanup_exit(data, "Invalid number of 'C' in map file");
 }
 
-void	map_validate(t_data *data)
+void	map_validate(t_data *data, char *filename)
 {
 	map_check_characters(data);
 	map_check_shape(data);
-	//map_check_valid_path(data);
+	map_check_valid_path(data, filename);
 }

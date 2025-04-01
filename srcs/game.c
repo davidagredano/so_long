@@ -17,7 +17,7 @@ void	game_init(t_data *data, char *filename)
 	data->game.map_height = map_count_rows(data, filename);
 	data->game.map = map_create(data, filename);
 	data->game.map_width = ft_strlen(data->game.map[0]);
-	map_validate(data);
+	map_validate(data, filename);
 	data->game.collectibles = map_entity_count(data, 'C');
 	data->game.exit = map_entity_find(data, 'E');
 	data->game.player = map_entity_find(data, 'P');
