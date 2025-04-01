@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/31 19:10:30 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:26:25 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	game_init(t_data *data, char *filename);
 
 /* Map */
 char	**map_create(t_data *data, char *filename);
+void	map_validate(t_data *data);
 int		map_count_rows(t_data *data, char *filename);
 t_coord	map_entity_find(t_data *data, char entity);
 int		map_entity_count(t_data *data, char entity);
