@@ -106,6 +106,7 @@ void	hooks_setup(t_data *data);
 /* Exit */
 void	cleanup(t_data *data);
 void	cleanup_exit(t_data *data, char *message);
+void	print_error(char *message);
 
 /* Debug */
 void	log_game_state(t_game *game);

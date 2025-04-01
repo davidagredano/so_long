@@ -6,11 +6,24 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:19:51 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/31 19:11:21 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/01 08:54:11 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	print_error(char *message)
+{
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putstr_fd("so_long: ", STDERR_FILENO);
+	if (mlx_errno > 0)
+	{
+		ft_putstr_fd("MLX42: ", STDERR_FILENO);
+		ft_putendl_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
+	}
+	else
+		ft_putendl_fd(message, STDERR_FILENO);
+}
 
 void	cleanup(t_data *data)
 {
@@ -27,13 +40,6 @@ void	cleanup(t_data *data)
 void	cleanup_exit(t_data *data, char *message)
 {
 	cleanup(data);
-	ft_putstr_fd("so_long: ", STDERR_FILENO);
-	if (mlx_errno > 0)
-	{
-		ft_putstr_fd("MLX42: ", STDERR_FILENO);
-		ft_putendl_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
-	}
-	else
-		ft_putendl_fd(message, STDERR_FILENO);
+	print_error(message);
 	exit(EXIT_FAILURE);
 }
