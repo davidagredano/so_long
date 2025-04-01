@@ -49,11 +49,11 @@ char	**map_create(t_data *data, char *filename)
 	if (fd == -1)
 		cleanup_exit(data, "Failed to open map file");
 	i = 0;
-	while (1)
+	while (i < data->game.map_height)
 	{
 		row = get_next_line(fd);
 		if (!row)
-			break ;
+			cleanup_exit(data, "Failed to read map file");
 		if (ft_strlen(row) > 0 && row[ft_strlen(row) - 1] == '\n')
 			row[ft_strlen(row) - 1] = '\0';
 		map[i] = row;
