@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 10:39:21 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:11:26 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,6 @@ int	map_count_columns(t_data *data)
 			cleanup_exit(data, "Too long rows in map file");
 	}
 	return (count);
-}
-
-char	**map_create(t_data *data, char *filename)
-{
-	char	**map;
-	char	*row;
-	int		fd;
-	int		i;
-
-	map = (char **)ft_calloc(data->game.map_height, sizeof(char *));
-	if (!map)
-		cleanup_exit(data, "Failed to allocate memory for map");
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		cleanup_exit(data, "Failed to open map file");
-	i = 0;
-	while (i < data->game.map_height)
-	{
-		row = get_next_line(fd);
-		if (!row)
-			cleanup_exit(data, "Failed to read map file");
-		if (ft_strlen(row) > 0 && row[ft_strlen(row) - 1] == '\n')
-			row[ft_strlen(row) - 1] = '\0';
-		map[i] = row;
-		i++;
-	}
-	if (close(fd) == -1)
-		cleanup_exit(data, "Failed to close map file");
-	return (map);
 }
 
 void	map_destroy(t_data *data)

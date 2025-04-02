@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 14:41:22 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:10:24 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ typedef struct s_data
 
 
 /* Game */
-void	game_init(t_data *data, char *filename);
-
-/* Map */
 char	**map_create(t_data *data, char *filename);
 void	map_validate(t_data *data, char* filename);
 int		map_count_rows(t_data *data, char *filename);
@@ -83,25 +80,10 @@ t_coord	map_entity_find(t_data *data, char entity);
 t_uint	map_entity_count(t_data *data, char entity);
 void	map_destroy(t_data *data);
 
-/* Collectibles */
-void	collectible_collect(t_data *data, t_coord target);
-
-/* Player */
-void	player_move(t_data *data, t_coord target);
-
-/* Movements */
-void	movements_add_one(t_game *game);
-void	movements_log(t_game *game);
-
 /* Graphics */
-void	graphics_init(t_data *data);
 void	graphics_draw_game(t_data *data);
-
-/* Textures */
 void	textures_load(t_data *data);
 void	textures_destroy(t_data *data);
-
-/* Images */
 void	images_create(t_data *data);
 
 /* Hooks */
@@ -111,6 +93,5 @@ void	hooks_setup(t_data *data);
 void	cleanup(t_data *data);
 void	cleanup_exit(t_data *data, char *message);
 void	print_error_exit(char *message);
-void	print_error(char *message);
 
 #endif

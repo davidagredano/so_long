@@ -6,13 +6,13 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:19:51 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 13:25:30 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:10:53 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	print_error(char *message)
+void	print_error_exit(char *message)
 {
 	ft_putstr_fd("Error\n", STDERR_FILENO);
 	ft_putstr_fd("so_long: ", STDERR_FILENO);
@@ -23,11 +23,6 @@ void	print_error(char *message)
 	}
 	else
 		ft_putendl_fd(message, STDERR_FILENO);
-}
-
-void	print_error_exit(char *message)
-{
-	print_error(message);
 	exit(EXIT_FAILURE);
 }
 
@@ -46,6 +41,5 @@ void	cleanup(t_data *data)
 void	cleanup_exit(t_data *data, char *message)
 {
 	cleanup(data);
-	print_error(message);
-	exit(EXIT_FAILURE);
+	print_error_exit(message);
 }
