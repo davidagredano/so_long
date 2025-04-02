@@ -7,7 +7,7 @@ LIBMLX := $(LIBMLX_DIR)/build/libmlx42.a
 CC := cc
 WFLAGS := -Wall -Wextra -Werror
 IDIRS := -I$(LIBMLX_DIR)/include -I$(LIBFT_DIR) -Iincludes
-CFLAGS := -MMD $(WFLAGS) $(IDIRS) -g
+CFLAGS := -MMD $(WFLAGS) $(IDIRS)
 COMPILE.c := $(CC) $(CFLAGS) -c
 OUTPUT_OPTION = -o $@
 
