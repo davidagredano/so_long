@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 22:36:53 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/31 19:11:33 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 13:58:56 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	graphics_init(t_data *data)
 
 	width = data->game.map_width * TILE_SIZE;
 	height = data->game.map_height * TILE_SIZE;
-	data->mlx = mlx_init(width, height, "so_long", false);
+	data->mlx = mlx_init(width, height, "so_long", true);
 	if (!data->mlx)
 		cleanup_exit(data, NULL);
 	textures_load(data);
