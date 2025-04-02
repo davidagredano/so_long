@@ -26,15 +26,8 @@ BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)
 
-NAME_BONUS := so_long_bonus
-SRCS_DIR_BONUS := srcs_bonus
-SRCS_BONUS := main_bonus.c
-BUILD_DIR_BONUS := build_bonus
-OBJS_BONUS := $(SRCS_BONUS:%.c=$(BUILD_DIR_BONUS)/%.o)
-DEPS_BONUS := $(SRCS_BONUS:%.c=$(BUILD_DIR_BONUS)/%.d)
 
-
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
@@ -48,22 +41,9 @@ $(BUILD_DIR):
 	mkdir -p $@
 
 
-bonus: $(NAME_BONUS)
-
-$(NAME_BONUS): $(LIBFT) $(LIBMLX) $(OBJS_BONUS)
-	$(LINK.o) $(OBJS_BONUS) $(LDLIBS) -o $@
-
-$(BUILD_DIR_BONUS)/%.o: $(SRCS_DIR_BONUS)/%.c $(BUILD_DIR_BONUS)/%.d \
-		Makefile | $(BUILD_DIR_BONUS)
-	$(COMPILE.c) $(OUTPUT_OPTION) $<
-
-$(BUILD_DIR_BONUS):
-	mkdir -p $@
-
-
 %.d: ;
 
--include $(DEPS) $(DEPS_BONUS)
+-include $(DEPS)
 
 
 $(LIBFT):
@@ -75,11 +55,11 @@ $(LIBMLX):
 
 
 clean:
-	$(RMDIR) $(BUILD_DIR) $(BUILD_DIR_BONUS)
+	$(RMDIR) $(BUILD_DIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 	$(RMDIR) $(LIBMLX_DIR)/build
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS) $(LIBFT) $(LIBMLX)
+	$(RM) $(NAME) $(LIBFT) $(LIBMLX)
 
 re:	fclean all
