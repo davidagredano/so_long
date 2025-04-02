@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 10:36:09 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 10:39:21 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	map_count_rows(t_data *data, char *filename)
 	if (fd == -1)
 		cleanup_exit(data, "Failed to open map file");
 	count = 0;
-	while (1)
+	while (count >= 0)
 	{
 		row = get_next_line(fd);
 		if (!row)
@@ -34,6 +34,22 @@ int	map_count_rows(t_data *data, char *filename)
 		cleanup_exit(data, "Failed to close map file");
 	if (count == 0)
 		cleanup_exit(data, "Map file is empty");
+	else if (count < 0)
+		cleanup_exit(data, "Map file is too large");
+	return (count);
+}
+
+int	map_count_columns(t_data *data)
+{
+	int	count;
+
+	count = 0;
+	while (data->game.map[0][count] != '\0')
+	{
+		count++;
+		if (count < 0)
+			cleanup_exit(data, "Too long rows in map file");
+	}
 	return (count);
 }
 

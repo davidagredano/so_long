@@ -78,6 +78,7 @@ void	game_init(t_data *data, char *filename);
 char	**map_create(t_data *data, char *filename);
 void	map_validate(t_data *data, char* filename);
 int		map_count_rows(t_data *data, char *filename);
+int		map_count_columns(t_data *data);
 t_coord	map_entity_find(t_data *data, char entity);
 t_uint	map_entity_count(t_data *data, char entity);
 void	map_destroy(t_data *data);
