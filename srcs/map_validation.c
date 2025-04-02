@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:01:35 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/01 13:24:54 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 09:30:27 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	map_check_valid_path(t_data *data, char *filename)
 	if (copy.game.exit.x == 0 && copy.game.exit.y == 0)
 	{
 		map_destroy(&copy);
-		cleanup_exit(data, "Invalid map: Exit is not accessible");
+		cleanup_exit(data, "Exit blocked on the map");
 	}
 	else if (copy.game.collectibles != map_entity_count(data, 'C'))
 	{
 		map_destroy(&copy);
-		cleanup_exit(data, "Invalid map: Some collectibles are not accessible");
+		cleanup_exit(data, "Some collectibles blocked on the map");
 	}
 	map_destroy(&copy);
 }
@@ -72,19 +72,19 @@ static void	map_check_shape(t_data *data)
 	while (y < data->game.map_height)
 	{
 		if ((int)ft_strlen(data->game.map[y]) != data->game.map_width)
-			cleanup_exit(data, "Map must be rectangular");
+			cleanup_exit(data, "Map not rectangular");
 		if (data->game.map[y][0] != '1')
-			cleanup_exit(data, "Map must be surrounded by walls");
+			cleanup_exit(data, "Map not surrounded by walls");
 		if (data->game.map[y][data->game.map_width - 1] != '1')
-			cleanup_exit(data, "Map must be surrounded by walls");
+			cleanup_exit(data, "Map not surrounded by walls");
 		y++;
 	}
 	row_top = data->game.map[0];
 	row_bottom = data->game.map[data->game.map_height - 1];
 	if (ft_strspn(row_top, "1") != ft_strlen(row_top))
-		cleanup_exit(data, "Map must be surrounded by walls");
+		cleanup_exit(data, "Map not surrounded by walls");
 	if (ft_strspn(row_bottom, "1") != ft_strlen(row_bottom))
-		cleanup_exit(data, "Map must be surrounded by walls");
+		cleanup_exit(data, "Map not surrounded by walls");
 }
 
 /**
@@ -103,17 +103,17 @@ static void	map_check_characters(t_data *data)
 		while (data->game.map[y][x] != '\0')
 		{
 			if (!ft_strchr("01CEP", data->game.map[y][x]))
-				cleanup_exit(data, "Invalid character found in map file");
+				cleanup_exit(data, "Invalid character on the map");
 			x++;
 		}
 		y++;
 	}
 	if (map_entity_count(data, 'E') != 1)
-		cleanup_exit(data, "Invalid number of 'E' in map file");
+		cleanup_exit(data, "Invalid number of 'E' on the map");
 	if (map_entity_count(data, 'P') != 1)
-		cleanup_exit(data, "Invalid number of 'P' in map file");
+		cleanup_exit(data, "Invalid number of 'P' on the map");
 	if (map_entity_count(data, 'C') < 1)
-		cleanup_exit(data, "Invalid number of 'C' in map file");
+		cleanup_exit(data, "Missing collectibles on the map");
 }
 
 void	map_validate(t_data *data, char *filename)
