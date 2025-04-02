@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 09:31:33 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 10:36:09 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ t_coord	map_entity_find(t_data *data, char type)
 	return (coord);
 }
 
-int	map_entity_count(t_data *data, char type)
+t_uint	map_entity_count(t_data *data, char type)
 {
-	int		count;
+	t_uint	count;
 	t_coord	coord;
 
 	count = 0;

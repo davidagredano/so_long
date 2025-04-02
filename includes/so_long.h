@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/01 13:26:25 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 10:36:22 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdlib.h> // EXIT_FAILURE
 # include "MLX42/MLX42.h"
 # include "libft.h"
+
+typedef unsigned int t_uint;
 
 /* Coordinates */
 typedef struct s_coord
@@ -53,10 +55,10 @@ typedef struct s_game
 	int		map_width;
 	int		map_height;
 	char	**map;
-	int		collectibles;
+	t_uint	collectibles;
 	t_coord	exit;
 	t_coord	player;
-	int		movements;
+	t_uint	movements;
 }		t_game;
 
 /* Data */
@@ -77,7 +79,7 @@ char	**map_create(t_data *data, char *filename);
 void	map_validate(t_data *data, char* filename);
 int		map_count_rows(t_data *data, char *filename);
 t_coord	map_entity_find(t_data *data, char entity);
-int		map_entity_count(t_data *data, char entity);
+t_uint	map_entity_count(t_data *data, char entity);
 void	map_destroy(t_data *data);
 
 /* Collectibles */
