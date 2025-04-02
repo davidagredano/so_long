@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 15:10:24 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:03:50 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "MLX42/MLX42.h"
 # include "libft.h"
 
-typedef unsigned int t_uint;
+typedef unsigned int	t_uint;
 
 /* Coordinates */
 typedef struct s_coord
@@ -70,10 +70,9 @@ typedef struct s_data
 	t_images	images;
 }		t_data;
 
-
 /* Game */
 char	**map_create(t_data *data, char *filename);
-void	map_validate(t_data *data, char* filename);
+void	map_validate(t_data *data, char *filename);
 int		map_count_rows(t_data *data, char *filename);
 int		map_count_columns(t_data *data);
 t_coord	map_entity_find(t_data *data, char entity);
