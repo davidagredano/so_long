@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 10:36:22 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 13:26:06 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	hooks_setup(t_data *data);
 /* Exit */
 void	cleanup(t_data *data);
 void	cleanup_exit(t_data *data, char *message);
+void	print_error_exit(char *message);
 void	print_error(char *message);
 
 /* Debug */

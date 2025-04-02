@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 17:19:51 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/01 08:54:11 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 13:25:30 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void	print_error(char *message)
 	}
 	else
 		ft_putendl_fd(message, STDERR_FILENO);
+}
+
+void	print_error_exit(char *message)
+{
+	print_error(message);
+	exit(EXIT_FAILURE);
 }
 
 void	cleanup(t_data *data)
