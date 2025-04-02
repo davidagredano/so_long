@@ -17,7 +17,7 @@ void	collectible_collect(t_data *data, t_coord target)
 	mlx_instance_t	*instance;
 	size_t			i;
 
-	data->game.collectibles -= 1;
+	data->game.collectibles--;
 	i = 0;
 	target.x *= TILE_SIZE;
 	target.y *= TILE_SIZE;

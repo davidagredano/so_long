@@ -18,13 +18,13 @@ static t_coord	get_target_coord(t_data *data, keys_t key)
 
 	target = data->game.player;
 	if (key == MLX_KEY_W)
-		target.y -= 1;
+		target.y--;
 	else if (key == MLX_KEY_A)
-		target.x -= 1;
+		target.x--;
 	else if (key == MLX_KEY_S)
-		target.y += 1;
+		target.y++;
 	else if (key == MLX_KEY_D)
-		target.x += 1;
+		target.x++;
 	return (target);
 }
 
