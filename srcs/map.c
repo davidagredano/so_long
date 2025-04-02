@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/03/31 20:23:56 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/02 09:31:33 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	map_count_rows(t_data *data, char *filename)
 	}
 	if (close(fd) == -1)
 		cleanup_exit(data, "Failed to close map file");
+	if (count == 0)
+		cleanup_exit(data, "Map file is empty");
 	return (count);
 }
 
