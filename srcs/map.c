@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 09:16:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 15:11:26 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:14:50 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_coord	map_entity_find(t_data *data, char type)
 	while (coord.y < data->game.map_height)
 	{
 		coord.x = 0;
-		while (coord.x < data->game.map_width)
+		while (data->game.map[coord.y][coord.x] != '\0')
 		{
 			if (data->game.map[coord.y][coord.x] == type)
 				return (coord);
@@ -92,20 +92,21 @@ t_coord	map_entity_find(t_data *data, char type)
 t_uint	map_entity_count(t_data *data, char type)
 {
 	t_uint	count;
-	t_coord	coord;
+	int		y;
+	int		x;
 
 	count = 0;
-	coord.y = 0;
-	while (coord.y < data->game.map_height)
+	y = 0;
+	while (y < data->game.map_height)
 	{
-		coord.x = 0;
-		while (coord.x < data->game.map_width)
+		x = 0;
+		while (data->game.map[y][x] != '\0')
 		{
-			if (data->game.map[coord.y][coord.x] == type)
+			if (data->game.map[y][x] == type)
 				count++;
-			coord.x++;
+			x++;
 		}
-		coord.y++;
+		y++;
 	}
 	return (count);
 }
