@@ -118,7 +118,7 @@ static void	map_check_characters(t_data *data)
 
 void	map_validate(t_data *data, char *filename)
 {
-	map_check_characters(data);
 	map_check_shape(data);
+	map_check_characters(data);
 	map_check_valid_path(data, filename);
 }
