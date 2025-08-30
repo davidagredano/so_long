@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:59:12 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 15:11:31 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:14:12 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,16 @@ char	**map_create(t_data *data, char *filename)
 
 static void	game_init(t_data *data, char *filename)
 {
+	ft_bzero(data, sizeof(t_data));
 	data->game.map_height = map_count_rows(data, filename);
 	data->game.map = map_create(data, filename);
 	data->game.map_width = map_count_columns(data);
-	map_validate(data, filename);
+	map_check_shape(data);
 	data->game.collectibles = map_entity_count(data, 'C');
 	data->game.exit = map_entity_find(data, 'E');
 	data->game.player = map_entity_find(data, 'P');
+	map_check_characters(data);
+	map_check_valid_path(data, filename);
 	data->game.movements = 0;
 }
 
@@ -92,7 +95,6 @@ int	main(int argc, char *argv[])
 	t_data	data;
 
 	arguments_validate(argc, argv);
-	ft_bzero(&data, sizeof(t_data));
 	game_init(&data, argv[1]);
 	graphics_init(&data);
 	graphics_draw_game(&data);

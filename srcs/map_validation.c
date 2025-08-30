@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:01:35 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 09:30:27 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:14:36 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	explore(t_data *copy, int x, int y)
 		copy->game.collectibles++;
 	if (copy->game.map[y][x] == 'E')
 	{
+		copy->game.exit.y = y;
 		copy->game.exit.x = x;
-		copy->game.exit.x = y;
 	}
 	copy->game.map[y][x] = 'X';
 	explore(copy, x, y - 1);
@@ -38,31 +38,27 @@ void	map_check_valid_path(t_data *data, char *filename)
 {
 	t_data	copy;
 
-	ft_bzero(&copy, sizeof(t_data));
-	copy.game.map_height = data->game.map_height;
+	ft_memmove(&copy, data, sizeof(t_data));
 	copy.game.map = map_create(data, filename);
 	if (!copy.game.map)
 		cleanup_exit(data, "Failed to allocate memory for map_copy");
-	copy.game.player = map_entity_find(data, 'P');
+	copy.game.collectibles = 0;
+	copy.game.exit.y = -1;
+	copy.game.exit.x = -1;
 	explore(&copy, copy.game.player.x, copy.game.player.y);
-	if (copy.game.exit.x == 0 && copy.game.exit.y == 0)
-	{
-		map_destroy(&copy);
-		cleanup_exit(data, "Exit blocked on the map");
-	}
-	else if (copy.game.collectibles != map_entity_count(data, 'C'))
-	{
-		map_destroy(&copy);
-		cleanup_exit(data, "Some collectibles blocked on the map");
-	}
 	map_destroy(&copy);
+	if (copy.game.exit.y != data->game.exit.y
+		|| copy.game.exit.x != data->game.exit.x)
+		cleanup_exit(data, "Exit blocked on the map");
+	else if (copy.game.collectibles != data->game.collectibles)
+		cleanup_exit(data, "Some collectibles blocked on the map");
 }
 
 /**
  * Check that is rectangular.
  * Check that is wall surrounded.
  */
-static void	map_check_shape(t_data *data)
+void	map_check_shape(t_data *data)
 {
 	char	*row_top;
 	char	*row_bottom;
@@ -91,7 +87,7 @@ static void	map_check_shape(t_data *data)
  * Checks there are valid characters only.
  * Checks minimum character appearance.
  */
-static void	map_check_characters(t_data *data)
+void	map_check_characters(t_data *data)
 {
 	int	y;
 	int	x;
@@ -114,11 +110,4 @@ static void	map_check_characters(t_data *data)
 		cleanup_exit(data, "Invalid number of 'P' on the map");
 	if (map_entity_count(data, 'C') < 1)
 		cleanup_exit(data, "Missing collectibles on the map");
-}
-
-void	map_validate(t_data *data, char *filename)
-{
-	map_check_shape(data);
-	map_check_characters(data);
-	map_check_valid_path(data, filename);
 }

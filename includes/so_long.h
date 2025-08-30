@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 08:43:26 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/02 19:03:50 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:14:06 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,16 @@ typedef struct s_data
 
 /* Game */
 char	**map_create(t_data *data, char *filename);
-void	map_validate(t_data *data, char *filename);
 int		map_count_rows(t_data *data, char *filename);
 int		map_count_columns(t_data *data);
 t_coord	map_entity_find(t_data *data, char entity);
 t_uint	map_entity_count(t_data *data, char entity);
 void	map_destroy(t_data *data);
+
+/* Map validation */
+void	map_check_shape(t_data *data);
+void	map_check_characters(t_data *data);
+void	map_check_valid_path(t_data *data, char *filename);
 
 /* Graphics */
 void	graphics_draw_game(t_data *data);
